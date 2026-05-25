@@ -1,0 +1,4 @@
+{
+  "6eme": {"maths": ["Nombres entiers", "Géométrie de base"], "svt": ["L'environnement proche", "Les besoins alimentaires"]}, 
+  "terminale": {"maths": ["Calcul intégral", "Probabilités conditionnelles"], "physique": ["Mécanique de Newton", "Loi de Wien"], "philo": ["La liberté", "La conscience"]}
+}

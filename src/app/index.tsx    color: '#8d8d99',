@@ -1,0 +1,217 @@
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+// Structure complète du programme ivoirien (Collège au Lycée)
+const PROGRAMME_IVOIRIEN = {
+  '6ème': [
+    { nom: 'Mathématiques', desc: 'Nombres entiers, décimaux, géométrie de base', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Sources de lumière, états de la matière', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Milieux naturels, respiration des êtres vivants', couleur: '#10b981' },
+    { nom: 'Français', desc: 'Grammaire, conjugaison, lecture méthodique', couleur: '#a855f7' },
+    { nom: 'Anglais', desc: 'Verb tenses, vocabulary, greeting basics', couleur: '#f59e0b' },
+    { nom: 'Histoire - Géographie', desc: 'La préhistoire, étude du milieu local', couleur: '#06b6d4' },
+    { nom: 'EDHC', desc: 'Droits de l’enfant, civisme et valeurs', couleur: '#ec4899' }
+  ],
+  '5ème': [
+    { nom: 'Mathématiques', desc: 'Fractions, angles, symétrie centrale', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Combustions, intensité et tension du courant', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Alimentation des êtres vivants, les sols', couleur: '#10b981' },
+    { nom: 'Français', desc: 'Texte narratif, dictée, vocabulaire', couleur: '#a855f7' },
+    { nom: 'Anglais', desc: 'Present continuous, talking about daily routines', couleur: '#f59e0b' },
+    { nom: 'Histoire - Géographie', desc: 'Les premiers empires africains, les climats', couleur: '#06b6d4' }
+  ],
+  '4ème': [
+    { nom: 'Mathématiques', desc: 'Théorème de Pythagore, équations simples', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Molécules, atomes, lentilles et miroirs', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Reproduction chez l’homme, tectonique des plaques', couleur: '#10b981' },
+    { nom: 'Français', desc: 'Texte argumentatif, résumé de texte', couleur: '#a855f7' },
+    { nom: 'Anglais', desc: 'Past simple, comparative and superlative', couleur: '#f59e0b' },
+    { nom: 'Deuxième Langue (All/Esp)', desc: 'Bases de la langue, grammaire', couleur: '#64748b' }
+  ],
+  '3ème': [
+    { nom: 'Mathématiques (Objectif BEPC)', desc: 'Racines carrées, vecteurs, systèmes d’équations', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Poids et masse, solutions acides et basiques', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Immunologie, digestion, éducation à la santé', couleur: '#10b981' },
+    { nom: 'Français', desc: 'Rédaction, étude d’œuvre intégrale', couleur: '#a855f7' },
+    { nom: 'Anglais', desc: 'Passive voice, conditional sentences', couleur: '#f59e0b' },
+    { nom: 'Histoire - Géographie', desc: 'La Côte d’Ivoire de la colonisation à l’indépendance', couleur: '#06b6d4' }
+  ],
+  '2nde C': [
+    { nom: 'Mathématiques', desc: 'Vecteurs du plan, fonctions polynômes, repérage', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Loi d’Ohm, conductivité, les ions, équations chimiques', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Écosystèmes, géologie structurale', couleur: '#10b981' },
+    { nom: 'Français', desc: 'Le commentaire composé, la dissertation', couleur: '#a855f7' }
+  ],
+  '1ère C/D': [
+    { nom: 'Mathématiques', desc: 'Dérivabilité, limites, barycentre, trigonométrie', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Travail et puissance, chimie organique, lentilles', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Génétique formelle, physiologie nerveuse', couleur: '#10b981' }
+  ],
+  'Tle D': [
+    { nom: 'Mathématiques (Objectif BAC)', desc: 'Fonctions LN et Exponentielles, Probabilités', couleur: '#3b82f6' },
+    { nom: 'Physique - Chimie', desc: 'Mécanique de Newton, estérification, saponification', couleur: '#ef4444' },
+    { nom: 'SVT', desc: 'Évolution humaine, reproduction et endocrinologie', couleur: '#10b981' },
+    { nom: 'Philosophie', desc: 'L’État, la liberté, la vérité, la conscience', couleur: '#f43f5e' }
+  ]
+};
+
+export default function HomeScreen() {
+  const [classeSelectionnee, setClasseSelectionnee] = useState('2nde C');
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        
+        {/* En-tête */}
+        <View style={styles.header}>
+          <Text style={styles.appTitle}>KRAK</Text>
+          <Text style={styles.appSubtitle}>Le Programme Scolaire Ivoirien en un Clic</Text>
+        </View>
+
+        {/* Sélecteur de Classes horizontal */}
+        <Text style={styles.sectionTitle}>Sélectionne ta classe :</Text>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.classesSelector}>
+          {Object.keys(PROGRAMME_IVOIRIEN).map((classe) => (
+            <TouchableOpacity 
+              key={classe} 
+              style={[
+                styles.classeButton, 
+                classeSelectionnee === classe && styles.classeButtonActive
+              ]}
+              onPress={() => setClasseSelectionnee(classe)}
+            >
+              <Text style={[
+                styles.classeButtonText, 
+                classeSelectionnee === classe && styles.classeButtonTextActive
+              ]}>
+                {classe}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </ScrollView>
+
+        {/* Zone des matières dynamiques */}
+        <View style={styles.matiresHeader}>
+          <Text style={styles.sectionTitle}>Matières — {classeSelectionnee}</Text>
+          <Text style={styles.countBadge}>{PROGRAMME_IVOIRIEN[classeSelectionnee].length} cours disponibles</Text>
+        </View>
+
+        {/* Rendu des matières en fonction de la classe cliquée */}
+        {PROGRAMME_IVOIRIEN[classeSelectionnee].map((matiere, index) => (
+          <TouchableOpacity key={index} style={[styles.card, { borderLeftColor: matiere.couleur }]}>
+            <View style={styles.cardInfo}>
+              <Text style={styles.cardTitle}>{matiere.nom}</Text>
+              <Text style={styles.cardDetails}>{matiere.desc}</Text>
+            </View>
+            <View style={styles.actionContainer}>
+              <Text style={styles.arrow}>›</Text>
+            </View>
+          </TouchableOpacity>
+        ))}
+
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#121214',
+  },
+  scrollContainer: {
+    padding: 20,
+  },
+  header: {
+    marginTop: 10,
+    marginBottom: 20,
+  },
+  appTitle: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: '#00875f',
+    letterSpacing: 2,
+  },
+  appSubtitle: {
+    fontSize: 15,
+    color: '#8d8d99',
+    marginTop: 5,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#e1e1e6',
+    marginBottom: 12,
+  },
+  classesSelector: {
+    flexDirection: 'row',
+    marginBottom: 25,
+  },
+  classeButton: {
+    backgroundColor: '#202024',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginRight: 10,
+    borderWidth: 1,
+    borderColor: '#29292e',
+  },
+  classeButtonActive: {
+    backgroundColor: '#00875f',
+    borderColor: '#00875f',
+  },
+  classeButtonText: {
+    color: '#a8a8b3',
+    fontWeight: '600',
+    fontSize: 14,
+  },
+  classeButtonTextActive: {
+    color: '#ffffff',
+  },
+  matiresHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  countBadge: {
+    color: '#00875f',
+    fontSize: 13,
+    fontWeight: '600',
+  },
+  card: {
+    backgroundColor: '#202024',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 18,
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 1,
+    borderColor: '#29292e',
+    borderLeftWidth: 6,
+  },
+  cardInfo: {
+    flex: 1,
+  },
+  cardTitle: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#ffffff',
+  },
+  cardDetails: {
+    fontSize: 13,
+    color: '#8d8d99',
+    marginTop: 4,
+    lineHeight: 18,
+  },
+  actionContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  arrow: {
+    fontSize: 26,
+    color: '#7c7c8a',
+    paddingLeft: 10,
+  },
+});
